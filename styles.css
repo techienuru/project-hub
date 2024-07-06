@@ -1,0 +1,63 @@
+* {
+    font-family: sans-serif;
+}
+
+body {
+    overflow-x: hidden;
+    background-color: whitesmoke;
+}
+
+#navbar {
+    box-shadow: 1px 3px 4px;
+}
+
+#signup-card .card-body {
+    box-shadow: 1px 1px 3px;
+}
+
+#signup-card .card-body h5 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #333;
+}
+
+#signup-card .card-body p {
+    color: rgba(182, 165, 165, 0.932);
+}
+
+#signup-card .card-body p a {
+    color: rgb(26, 173, 26);
+    font-size: 18px;
+    text-decoration: none;
+}
+
+/* from login.php */
+#logincard {
+    margin-top: 100px;
+    box-shadow: 1px 1px 3px;
+}
+
+#logincard .card-body h5 {
+    font-size: 30px;
+    font-weight: 600;
+    color: #333;
+}
+
+#logincard .card-body p a {
+    color: rgb(26, 173, 26);
+    font-size: 18px;
+    text-decoration: none;
+}
+
+/* End of login.php */
+
+/* Project cards from project.html */
+#project-card {
+    transition: transform 0.2s;
+}
+
+#project-card:hover {
+    transform: scale(1.05);
+}
+
+/* End of projects cards from project.html */
