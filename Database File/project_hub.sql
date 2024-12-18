@@ -1,13 +1,14 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.5.2
+-- version 5.2.0
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 15, 2023 at 12:27 PM
--- Server version: 10.1.21-MariaDB
--- PHP Version: 5.6.30
+-- Generation Time: Nov 10, 2024 at 03:13 PM
+-- Server version: 10.4.27-MariaDB
+-- PHP Version: 8.0.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+START TRANSACTION;
 SET time_zone = "+00:00";
 
 
@@ -34,8 +35,8 @@ CREATE TABLE `approved_project` (
   `project_file` varchar(255) NOT NULL,
   `supervisor's_name` varchar(255) NOT NULL,
   `supervisor's_email` varchar(255) NOT NULL,
-  `approval_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+  `approval_time` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `approved_project`
@@ -69,9 +70,9 @@ CREATE TABLE `approved_suggestion` (
   `project_description` varchar(255) NOT NULL,
   `supervisor's_name` varchar(255) NOT NULL,
   `supervisor's_email` varchar(255) NOT NULL,
-  `upload_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
-  `approved_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+  `upload_time` timestamp NOT NULL DEFAULT current_timestamp(),
+  `approved_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `approved_suggestion`
@@ -100,10 +101,10 @@ CREATE TABLE `declined_suggestion` (
   `project_description` varchar(255) NOT NULL,
   `supervisor's_name` varchar(255) NOT NULL,
   `supervisor's_email` varchar(255) NOT NULL,
-  `upload_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `upload_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `declined_message` varchar(3000) DEFAULT NULL,
-  `declined_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+  `declined_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `declined_suggestion`
@@ -128,8 +129,8 @@ CREATE TABLE `pending_project` (
   `supervisor's_email` varchar(255) NOT NULL,
   `project_status` varchar(255) DEFAULT NULL,
   `decline_message` varchar(5000) DEFAULT NULL,
-  `upload_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 ROW_FORMAT=COMPACT;
+  `upload_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci ROW_FORMAT=COMPACT;
 
 --
 -- Dumping data for table `pending_project`
@@ -151,8 +152,8 @@ CREATE TABLE `project_suggestion` (
   `project_description` varchar(5000) NOT NULL,
   `supervisor's_name` varchar(255) NOT NULL,
   `supervisor's_email` varchar(255) NOT NULL,
-  `upload_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `upload_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
@@ -162,7 +163,7 @@ CREATE TABLE `project_suggestion` (
 
 CREATE TABLE `secret_id` (
   `secret_id` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `secret_id`
@@ -186,9 +187,9 @@ CREATE TABLE `student` (
   `level` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `reg_time` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
+  `reg_time` timestamp NULL DEFAULT current_timestamp(),
   `photos` varchar(255) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `student`
@@ -216,10 +217,10 @@ CREATE TABLE `supervisor` (
   `othername` varchar(255) NOT NULL,
   `email` varchar(255) NOT NULL,
   `password` varchar(255) NOT NULL,
-  `reg_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `reg_time` timestamp NOT NULL DEFAULT current_timestamp(),
   `photos` varchar(255) NOT NULL,
-  `update_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `update_time` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 --
 -- Dumping data for table `supervisor`
@@ -286,36 +287,44 @@ ALTER TABLE `supervisor`
 --
 ALTER TABLE `approved_project`
   MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
 --
 -- AUTO_INCREMENT for table `approved_suggestion`
 --
 ALTER TABLE `approved_suggestion`
   MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+
 --
 -- AUTO_INCREMENT for table `declined_suggestion`
 --
 ALTER TABLE `declined_suggestion`
   MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `pending_project`
 --
 ALTER TABLE `pending_project`
   MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
 --
 -- AUTO_INCREMENT for table `project_suggestion`
 --
 ALTER TABLE `project_suggestion`
   MODIFY `project_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
 --
 -- AUTO_INCREMENT for table `student`
 --
 ALTER TABLE `student`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+
 --
 -- AUTO_INCREMENT for table `supervisor`
 --
 ALTER TABLE `supervisor`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+COMMIT;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
