@@ -5,7 +5,7 @@ include "../include/connect.php";
 if (isset($_SESSION["id"])) {
     $user_id = $_SESSION["id"];
     $sql = mysqli_query($connect, "SELECT * FROM `student` WHERE id = $user_id");
-    
+
     if ($sql) {
         $fetch = mysqli_fetch_assoc($sql);
         $firstname = $fetch["firstname"];
@@ -19,7 +19,7 @@ if (isset($_SESSION["id"])) {
         $fullname = "{$firstname} {$lastname}";
         $modified_lastname = strtoupper($lastname);
     }
-}else {
+} else {
     header("location:../login.php");
 }
 ?>
@@ -47,42 +47,47 @@ if (isset($_SESSION["id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/styles.css">
     <style>
         .status-badge {
-    display: block;
-    width: 200px;
-    margin-bottom: 20px;
-    padding: 15px 20px;
-    border-radius: 30px;
-    text-align: center;
-    text-transform: uppercase;
-    font-size: 14px;
-    letter-spacing: 1px;
-}
+            display: block;
+            width: 200px;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 30px;
+            text-align: center;
+            text-transform: uppercase;
+            font-size: 14px;
+            letter-spacing: 1px;
+        }
 
-.approved {
-    background-color: #28a745; /* Green color for approved status */
-    color: #fff; /* White text color for approved status */
-    font-weight: bold;
-    opacity: 1; /* Full opacity for approved status */
-}
+        .approved {
+            background-color: #28a745;
+            /* Green color for approved status */
+            color: #fff;
+            /* White text color for approved status */
+            font-weight: bold;
+            opacity: 1;
+            /* Full opacity for approved status */
+        }
 
-.not-approved {
-    background-color: #dc3545; /* Red color for not approved status */
-    color: #ccc; /* Light gray text color for not approved status */
-    font-weight: normal;
-    opacity: 0.7; /* 70% opacity for not approved status */
-}
+        .not-approved {
+            background-color: #dc3545;
+            /* Red color for not approved status */
+            color: #ccc;
+            /* Light gray text color for not approved status */
+            font-weight: normal;
+            opacity: 0.7;
+            /* 70% opacity for not approved status */
+        }
 
-/* FontAwesome icons */
-i {
-    margin-right: 10px;
-    font-size: 18px;
-}
-
+        /* FontAwesome icons */
+        i {
+            margin-right: 10px;
+            font-size: 18px;
+        }
     </style>
 </head>
 
@@ -110,7 +115,7 @@ i {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -153,7 +158,7 @@ i {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./feedback.php">
                         <span class="menu-icon">
@@ -213,105 +218,105 @@ i {
             <div class="main-panel ">
                 <div class="content-wrapper">
                     <div class="container p-5">
-                    <h2 class="mb-5">Project Suggestion Feedback</h2>
-    <?php 
-    $sql2 = mysqli_query($connect,"SELECT * FROM `approved_suggestion` WHERE student_name = '$fullname'");
+                        <h2 class="mb-5">Project Suggestion Feedback</h2>
+                        <?php
+                        $sql2 = mysqli_query($connect, "SELECT * FROM `approved_suggestion` WHERE student_name = '$fullname'");
 
-    if (mysqli_num_rows($sql2) > 0) {
-        $row = mysqli_fetch_assoc($sql2);
-        $project_tittle = $row["project_tittle"];
-        $project_description = $row["project_description"];
-        echo '
+                        if (mysqli_num_rows($sql2) > 0) {
+                            $row = mysqli_fetch_assoc($sql2);
+                            $project_tittle = $row["project_tittle"];
+                            $project_description = $row["project_description"];
+                            echo '
         <div class="status-badge approved d-block"> 
             <i class="fas fa-check-circle"></i> Approved 
         </div>
         <div class="status-badge  w-100 d-block" style="border:3px solid white;"> 
-            <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>'.$project_description.' </p>
-            <p class="d-flex justify-content-end w-100"><strong>Project Title:</strong>'.$project_tittle.'</p>
+            <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>' . $project_description . ' </p>
+            <p class="d-flex justify-content-end w-100"><strong>Project Title:</strong>' . $project_tittle . '</p>
         </div>
         
         ';
-    }
-    
-    ?>
+                        }
 
-    <?php 
-    $sql3 = mysqli_query($connect,"SELECT * FROM `declined_suggestion` WHERE student_name = '$fullname'");
-    
-    
-    if (mysqli_num_rows($sql3) > 0) {
-        while ($fetch3 = mysqli_fetch_assoc($sql3)) {
+                        ?>
 
-            $project_tittle = $fetch3["project_tittle"];
-            $message = $fetch3["declined_message"];
-            $declined_time = $fetch3["declined_time"];
-            echo '
+                        <?php
+                        $sql3 = mysqli_query($connect, "SELECT * FROM `declined_suggestion` WHERE student_name = '$fullname'");
+
+
+                        if (mysqli_num_rows($sql3) > 0) {
+                            while ($fetch3 = mysqli_fetch_assoc($sql3)) {
+
+                                $project_tittle = $fetch3["project_tittle"];
+                                $message = $fetch3["declined_message"];
+                                $declined_time = $fetch3["declined_time"];
+                                echo '
             <div class="status-badge not-approved"> 
                 <i class="fas fa-times-circle"></i> Not Approved
             </div>
 
             <div class="status-badge  w-100 d-block" style="border:3px solid white;"> 
-                <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>'.$project_tittle.' </p>
-                <p class="rounded-5 text-break text-danger p-3"><strong>Message:</strong>'.$message.' </p>
-                <p class="d-flex justify-content-end w-100">'.$declined_time.'</p>
+                <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>' . $project_tittle . ' </p>
+                <p class="rounded-5 text-break text-danger p-3"><strong>Message:</strong>' . $message . ' </p>
+                <p class="d-flex justify-content-end w-100">' . $declined_time . '</p>
             </div>
             ';
-        }
-    }
-    
-    ?>
+                            }
+                        }
 
-<h2 class="mb-5">Final Project Feedback</h2>
+                        ?>
+
+                        <h2 class="mb-5">Final Project Feedback</h2>
 
 
-<?php 
-    $sql4 = mysqli_query($connect,"SELECT * FROM `pending_project` WHERE student_name = '$fullname' AND project_status IS NOT NULL");
-    
-    
-    if (mysqli_num_rows($sql4) > 0) {
-        while ($fetch3 = mysqli_fetch_assoc($sql4)) {
+                        <?php
+                        $sql4 = mysqli_query($connect, "SELECT * FROM `pending_project` WHERE student_name = '$fullname' AND project_status IS NOT NULL");
 
-            $pending_project_tittle = $fetch3["project_tittle"];
-            $pending_message = $fetch3["decline_message"];
-            echo '
+
+                        if (mysqli_num_rows($sql4) > 0) {
+                            while ($fetch3 = mysqli_fetch_assoc($sql4)) {
+
+                                $pending_project_tittle = $fetch3["project_tittle"];
+                                $pending_message = $fetch3["decline_message"];
+                                echo '
             <div class="status-badge not-approved"> 
                 <i class="fas fa-times-circle"></i> Not Approved
             </div>
 
             <div class="status-badge  w-100 d-block" style="border:3px solid white;"> 
-                <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>'.$pending_project_tittle.' </p>
-                <p class="rounded-5 text-break text-danger p-3"><strong>Message:</strong>'.$pending_message.' </p>
+                <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>' . $pending_project_tittle . ' </p>
+                <p class="rounded-5 text-break text-danger p-3"><strong>Message:</strong>' . $pending_message . ' </p>
             </div>
             ';
-        }
-    }
-    
-    ?>
+                            }
+                        }
+
+                        ?>
 
 
-<?php 
-    $sql5 = mysqli_query($connect,"SELECT * FROM `approved_project` WHERE student_name = '$fullname'");
-    
-    
-    if (mysqli_num_rows($sql5) > 0) {
-        while ($fetch4 = mysqli_fetch_assoc($sql5)) {
+                        <?php
+                        $sql5 = mysqli_query($connect, "SELECT * FROM `approved_project` WHERE student_name = '$fullname'");
 
-            $approved_project_tittle = $fetch4["project_tittle"];
-            $approved_project_description = $fetch4["project_description"];
-            echo '
+
+                        if (mysqli_num_rows($sql5) > 0) {
+                            while ($fetch4 = mysqli_fetch_assoc($sql5)) {
+
+                                $approved_project_tittle = $fetch4["project_tittle"];
+                                $approved_project_description = $fetch4["project_description"];
+                                echo '
         <div class="status-badge approved d-block"> 
             <i class="fas fa-check-circle"></i> Approved 
         </div>
         <div class="status-badge  w-100 d-block" style="border:3px solid white;"> 
-            <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>'.$approved_project_description.' </p>
-            <p class="d-flex justify-content-end w-100"><strong>Project Title:</strong>'.$approved_project_tittle.'</p>
+            <p class="rounded-5 text-break p-3"><strong>Project Description:</strong>' . $approved_project_description . ' </p>
+            <p class="d-flex justify-content-end w-100"><strong>Project Title:</strong>' . $approved_project_tittle . '</p>
         </div>
         
         ';
-        }
-    }
-    
-    ?>
+                            }
+                        }
+
+                        ?>
 
                     </div>
 
@@ -322,9 +327,9 @@ i {
     </div>
 
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

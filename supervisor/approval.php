@@ -135,7 +135,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         <span class="menu-title">View Students</span>
                     </a>
                 </li>
-        
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./approval.php">
                         <span class="menu-icon">
@@ -294,10 +294,10 @@ if (isset($_SESSION["supervisor_id"])) {
                     <script>
                         // JavaScript to handle button clicks
 
-                    tinymce.init({
-                        // ... (your existing configuration)
-                        
-                    });
+                        tinymce.init({
+                            // ... (your existing configuration)
+
+                        });
 
 
 
@@ -327,9 +327,9 @@ if (isset($_SESSION["supervisor_id"])) {
     </div>
     </div>
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

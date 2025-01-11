@@ -4,7 +4,7 @@ include "../include/connect.php";
 if (isset($_GET["id"])) {
     $project_id = $_GET["id"];
     $declined_message = $_POST["decline_reason"];
-    $declined_message = filter_var($declined_message,FILTER_SANITIZE_STRING);
+    $declined_message = filter_var($declined_message, FILTER_SANITIZE_STRING);
 
     $sql = mysqli_query($connect, "SELECT * FROM `pending_project` WHERE `project_id` = $project_id");
 
@@ -22,7 +22,7 @@ if (isset($_GET["id"])) {
             $sql2 = mysqli_query($connect, "UPDATE `pending_project` SET project_status = 'DECLINED', decline_message = '$declined_message' WHERE project_id = $project_id");
 
             if ($sql2) {
-                    echo '
+                echo '
                     <script>
                         alert("Project Declined\nMessage sent!");
                         window.location.href="approval.php";
@@ -37,4 +37,3 @@ if (isset($_GET["id"])) {
         die('Error fetching data from pending_project: ' . mysqli_error($connect));
     }
 }
-?>

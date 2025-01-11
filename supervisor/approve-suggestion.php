@@ -43,4 +43,3 @@ if (isset($_GET["project_id"])) {
         echo 'Error fetching data from pending_project: ' . mysqli_error($connect);
     }
 }
-?>

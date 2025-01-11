@@ -136,7 +136,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         <span class="menu-title">View Students</span>
                     </a>
                 </li>
-        
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./approval.php">
                         <span class="menu-icon">
@@ -222,18 +222,18 @@ if (isset($_SESSION["supervisor_id"])) {
 
                         <div class="row">
 
-                        <?Php
+                            <?Php
                             // SELECTING PENDING PROJECTS FOR LOGGED IN SUPERVISOR
-    $sql2 = mysqli_query($connect, "SELECT * FROM `pending_project` WHERE (`supervisor's_name` = '$fullname' OR `supervisor's_email` = '$email') AND project_status IS NULL");
-    while ($fetch = mysqli_fetch_assoc($sql2)) {
-        $project_id = $fetch["project_id"];
-        $student_name = $fetch["student_name"];
-        $project_tittle = $fetch["project_tittle"];
-        $project_description = $fetch["project_description"];
-        $project_file = $fetch["project_file"];
-        $upload_time = $fetch["upload_time"];
+                            $sql2 = mysqli_query($connect, "SELECT * FROM `pending_project` WHERE (`supervisor's_name` = '$fullname' OR `supervisor's_email` = '$email') AND project_status IS NULL");
+                            while ($fetch = mysqli_fetch_assoc($sql2)) {
+                                $project_id = $fetch["project_id"];
+                                $student_name = $fetch["student_name"];
+                                $project_tittle = $fetch["project_tittle"];
+                                $project_description = $fetch["project_description"];
+                                $project_file = $fetch["project_file"];
+                                $upload_time = $fetch["upload_time"];
 
-                            echo '
+                                echo '
                     <!-- Include TinyMCE script -->
                         <script src="../tinymce/tinymce.min.js"></script>
 
@@ -265,15 +265,15 @@ if (isset($_SESSION["supervisor_id"])) {
                         <div class="card-body">
                           <h5 class="card-title">PROJECT TITLE: ' . $project_tittle . ' </h5>
                           <p class="card-text">PROJECT DESCRIPTION: ' . $project_description . '</p>
-                          <p class="card-text text-muted">Upload Time: '.$upload_time.'</p>
-                          <button type="button" class="btn btn-primary d-block" data-bs-toggle="modal" data-bs-target="#projectModal'.$project_id.'">View Project</button>
+                          <p class="card-text text-muted">Upload Time: ' . $upload_time . '</p>
+                          <button type="button" class="btn btn-primary d-block" data-bs-toggle="modal" data-bs-target="#projectModal' . $project_id . '">View Project</button>
                           
                           
-                          <a href="approve-project.php?id='.$project_id.'" class="btn btn-success approve-btn mt-3">Approve</a>
+                          <a href="approve-project.php?id=' . $project_id . '" class="btn btn-success approve-btn mt-3">Approve</a>
                           <button type="button" class="btn btn-danger decline-btn mt-3">Decline</button>
 
 
-                          <form action="decline-project.php?id='.$project_id.'" method="POST">
+                          <form action="decline-project.php?id=' . $project_id . '" method="POST">
                           <div class="reason-input" style="display:none;">
                             <label for="reason">Reason for Decline:</label>
                             <!-- Replace the standard textarea with TinyMCE -->
@@ -288,19 +288,19 @@ if (isset($_SESSION["supervisor_id"])) {
                     </div>
 
                 <!-- Modal (Bootstrap 5) -->
-<div class="modal fade" id="projectModal'. $project_id .'" tabindex="-1" aria-labelledby="projectModalLabel'. $project_tittle .'" aria-hidden="true">
+<div class="modal fade" id="projectModal' . $project_id . '" tabindex="-1" aria-labelledby="projectModalLabel' . $project_tittle . '" aria-hidden="true">
     <div class="modal-dialog modal-dialog-scrollable modal-lg">
         <div class="modal-content bg-light text-dark">
             <div class="modal-header">
-                <h5 class="modal-title" id="projectModalLabel'. $project_tittle .'"></h5>
+                <h5 class="modal-title" id="projectModalLabel' . $project_tittle . '"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                <p>'. $project_description .'</p>
-                <p><small>Uploaded by: '. $student_name .'</small></p>
+                <p>' . $project_description . '</p>
+                <p><small>Uploaded by: ' . $student_name . '</small></p>
                 <!-- Embed PDF Viewer -->
                 <div class="embed-responsive embed-responsive-4by3">
-                    <iframe class="embed-responsive-item" src="../student/'. $project_file .'" allowfullscreen></iframe>
+                    <iframe class="embed-responsive-item" src="../student/' . $project_file . '" allowfullscreen></iframe>
                 </div>
             </div>
         </div>
@@ -308,62 +308,62 @@ if (isset($_SESSION["supervisor_id"])) {
 </div>
 
                 ';
-                        }
+                            }
 
 
-                        ?>
+                            ?>
 
-                        <!-- Add more project cards as needed -->
-                    </div>
-
-                    <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-                    <script>
-                        // JavaScript to handle button clicks
-
-                    tinymce.init({
-                        // ... (your existing configuration)
-                        
-                    });
-
-
-
-                        document.querySelectorAll('.decline-btn').forEach(function(button) {
-                            button.addEventListener('click', function() {
-                                // Show reason input when declining
-                                var reasonInput = button.parentElement.querySelector('.reason-input');
-                                reasonInput.style.display = 'block';
-
-                                // Handle decline logic here
-                                document.querySelector('.submit-btn').addEventListener('click', function() {
-                                    var reason = reasonInput.querySelector('#reason').value;
-                                    if (reason.trim() !== '') {
-                                        alert('Project Declined. Reason: ' + reason);
-                                        // Handle further actions with the reason here
-                                    } else {
-                                        alert('Please provide a reason for declining the project.');
-                                    }
-                                });
-                            });
-                        });
-                    </script>
-
-
+                            <!-- Add more project cards as needed -->
                         </div>
 
+                        <script src="https://cdn.jsdelivr.net/npm/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                        <script>
+                            // JavaScript to handle button clicks
+
+                            tinymce.init({
+                                // ... (your existing configuration)
+
+                            });
 
 
 
-    
-                        
+                            document.querySelectorAll('.decline-btn').forEach(function(button) {
+                                button.addEventListener('click', function() {
+                                    // Show reason input when declining
+                                    var reasonInput = button.parentElement.querySelector('.reason-input');
+                                    reasonInput.style.display = 'block';
+
+                                    // Handle decline logic here
+                                    document.querySelector('.submit-btn').addEventListener('click', function() {
+                                        var reason = reasonInput.querySelector('#reason').value;
+                                        if (reason.trim() !== '') {
+                                            alert('Project Declined. Reason: ' + reason);
+                                            // Handle further actions with the reason here
+                                        } else {
+                                            alert('Please provide a reason for declining the project.');
+                                        }
+                                    });
+                                });
+                            });
+                        </script>
+
+
+                    </div>
+
+
+
+
+
+
                 </div>
             </div>
         </div>
     </div>
     </div>
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

@@ -1,7 +1,7 @@
 <?php
 
-            session_start();
-            include "../include/connect.php";
+session_start();
+include "../include/connect.php";
 
 //DECLARING NEW VARIABLES
 $new_password_err = null;
@@ -10,62 +10,62 @@ if (isset($_SESSION["id"])) {
     $user_id = $_SESSION["id"];
     $sql = mysqli_query($connect, "SELECT * FROM `student` WHERE id = $user_id");
 
-            if ($sql) {
-                $fetch = mysqli_fetch_assoc($sql);
-                $firstname = $fetch["firstname"];
-                $lastname = $fetch["lastname"];
-                $othername = $fetch["othername"];
-                $matricno = $fetch["matricno"];
-                $level = $fetch["level"];
-                $email = $fetch["email"];
-                $password = $fetch["password"];
-                $photos = $fetch["photos"];
+    if ($sql) {
+        $fetch = mysqli_fetch_assoc($sql);
+        $firstname = $fetch["firstname"];
+        $lastname = $fetch["lastname"];
+        $othername = $fetch["othername"];
+        $matricno = $fetch["matricno"];
+        $level = $fetch["level"];
+        $email = $fetch["email"];
+        $password = $fetch["password"];
+        $photos = $fetch["photos"];
 
         $modified_lastname = strtoupper($lastname);
     } else {
         die("Error: " . mysqli_error($connect));
     }
-            if (isset($_POST['submit'])) {
-                $new_firstname = $_POST['firstname'];
-                $new_lastname = $_POST['lastname'];
-                $new_othername = $_POST['othername'];
-                $new_matricno = $_POST['matricno'];
-                $new_level = $_POST['level'];
-                $new_email = $_POST['email'];
-                $new_password = $_POST['password'];
-                $new_cpassword = $_POST['cpassword'];
-                $photo = $_FILES["photo"];
+    if (isset($_POST['submit'])) {
+        $new_firstname = $_POST['firstname'];
+        $new_lastname = $_POST['lastname'];
+        $new_othername = $_POST['othername'];
+        $new_matricno = $_POST['matricno'];
+        $new_level = $_POST['level'];
+        $new_email = $_POST['email'];
+        $new_password = $_POST['password'];
+        $new_cpassword = $_POST['cpassword'];
+        $photo = $_FILES["photo"];
 
-                //GETTING FILE DETAILS
-                $real_photo_name = $photo["name"];
-                $temp_name = $photo["tmp_name"];
+        //GETTING FILE DETAILS
+        $real_photo_name = $photo["name"];
+        $temp_name = $photo["tmp_name"];
 
-                $pathinfo_array = pathinfo($real_photo_name, PATHINFO_EXTENSION);
+        $pathinfo_array = pathinfo($real_photo_name, PATHINFO_EXTENSION);
 
-                $extension = pathinfo($real_photo_name, PATHINFO_EXTENSION);
+        $extension = pathinfo($real_photo_name, PATHINFO_EXTENSION);
 
-                $target_dir = "photos/" . $real_photo_name;
-
-
+        $target_dir = "photos/" . $real_photo_name;
 
 
-                if ($new_password != $new_cpassword) {
-                    $new_password_err = "Password mismatch";
-                } else {
 
-                    $move_photos = move_uploaded_file($temp_name, $target_dir);
-                    if ($move_photos) {
-                        $sql = mysqli_query($connect, "UPDATE `student` SET firstname = '$new_firstname', lastname = '$new_lastname', othername = '$new_othername', matricno = '$new_matricno', level = '$new_level', email = '$new_email', password = '$new_password', photos = '$target_dir' WHERE id = $user_id");
-                        if ($sql) {
-                            echo "<script>alert('update successful');
+
+        if ($new_password != $new_cpassword) {
+            $new_password_err = "Password mismatch";
+        } else {
+
+            $move_photos = move_uploaded_file($temp_name, $target_dir);
+            if ($move_photos) {
+                $sql = mysqli_query($connect, "UPDATE `student` SET firstname = '$new_firstname', lastname = '$new_lastname', othername = '$new_othername', matricno = '$new_matricno', level = '$new_level', email = '$new_email', password = '$new_password', photos = '$target_dir' WHERE id = $user_id");
+                if ($sql) {
+                    echo "<script>alert('update successful');
                             window.location.href='update-profile.php';
                             </script>";
-                        } else {
-                            die("NOT SUCCESSFUL");
-                        }
-                    }
+                } else {
+                    die("NOT SUCCESSFUL");
                 }
             }
+        }
+    }
 } else {
     header("location:../login.php");
 }
@@ -100,7 +100,7 @@ if (isset($_SESSION["id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <style>
         body {
             background-color: #f8f9fa;
@@ -197,7 +197,7 @@ if (isset($_SESSION["id"])) {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="/template/feedback.php">
                         <span class="menu-icon">
@@ -222,7 +222,7 @@ if (isset($_SESSION["id"])) {
                     </button>
                     <ul class="navbar-nav w-100">
                         <li class="nav-item w-100">
-                            
+
                         </li>
                     </ul>
                     <ul class="navbar-nav navbar-nav-right">
@@ -259,95 +259,92 @@ if (isset($_SESSION["id"])) {
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                    
-                <?php 
-                    if(isset($_GET["s"])){
+
+                    <?php
+                    if (isset($_GET["s"])) {
                         $search = $_GET["s"];
-                    }else{
+                    } else {
                         $search = null;
                     }
-                ?>
+                    ?>
 
                     <div class="container mt-5">
-                        <h2 class="mb-4">Results for <?php echo $search;?></h2>
+                        <h2 class="mb-4">Results for <?php echo $search; ?></h2>
                         <ul class="navbar-nav w-100">
-                        <li class="nav-item w-100">
-                        <form action="search.php" method="get" class="nav-link my-4 d-flex search">
-                        <input type="text" name="s" class="form-control text-white" placeholder="Search projects">
-                        <button type="submit" class="btn bg-primary">
-                            <i class="mdi mdi-magnify"></i>
-                        </button>
-                    </form>
-                        </li>
-                    </ul>
+                            <li class="nav-item w-100">
+                                <form action="search.php" method="get" class="nav-link my-4 d-flex search">
+                                    <input type="text" name="s" class="form-control text-white" placeholder="Search projects" required>
+                                    <button type="submit" class="btn bg-primary">
+                                        <i class="mdi mdi-magnify"></i>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                         <div class="row">
 
-                        <?php 
-                        //SELECTING ALL PROJECTS
-                        $sql2 = mysqli_query($connect,"SELECT * FROM `approved_project` WHERE project_tittle LIKE '%$search%' OR project_description LIKE '%$search%'");
-                        if (mysqli_num_rows($sql2) > 0) {
-                            while ($fetch = mysqli_fetch_assoc($sql2)) {
-                                $project_id = $fetch["project_id"];
-                                $student_name = $fetch["student_name"];
-                                $project_tittle = $fetch["project_tittle"];
-                                $project_description = $fetch["project_description"];
-                                $project_file = $fetch["project_file"];
-                                $upload_time = $fetch["upload_time"];
-    
-                               
-                                echo '
+                            <?php
+                            //SELECTING ALL PROJECTS
+                            $sql2 = mysqli_query($connect, "SELECT * FROM `approved_project` WHERE project_tittle LIKE '%$search%' OR project_description LIKE '%$search%'");
+                            if (mysqli_num_rows($sql2) > 0) {
+                                while ($fetch = mysqli_fetch_assoc($sql2)) {
+                                    $project_id = $fetch["project_id"];
+                                    $student_name = $fetch["student_name"];
+                                    $project_tittle = $fetch["project_tittle"];
+                                    $project_description = $fetch["project_description"];
+                                    $project_file = $fetch["project_file"];
+                                    $upload_time = $fetch["upload_time"];
+
+
+                                    echo '
                                 <!-- Sample Project Card 1-->
                                 <div class="col-lg-4 col-md-6 mb-4">
                                     <!-- Project Card -->
                                     <div class="card" id="project-card">
                                         <div class="card-body">
-                                            <h5 class="card-title">'.$project_tittle.'</h5>
-                                            <p class="card-text">'.$project_description.'</p>
-                                            <p class="card-text text-muted m-0">Uploaded by: '.$student_name.'</p>
-                                            <p class="card-text text-muted">Upload Time: '.$upload_time.'</p>
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal'.$project_id.'">View Project</button>
+                                            <h5 class="card-title">' . $project_tittle . '</h5>
+                                            <p class="card-text">' . $project_description . '</p>
+                                            <p class="card-text text-muted m-0">Uploaded by: ' . $student_name . '</p>
+                                            <p class="card-text text-muted">Upload Time: ' . $upload_time . '</p>
+                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal' . $project_id . '">View Project</button>
                                         </div>
                                     </div>
                                 
                                     <!-- Modal (Bootstrap 5) -->
-                                    <div class="modal fade" id="projectModal'.$project_id.'" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+                                    <div class="modal fade" id="projectModal' . $project_id . '" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
                                         <div class="modal-dialog modal-dialog-scrollable modal-lg"> <!-- Use modal-dialog-scrollable for a scrollable modal on smaller screens -->
                                             <div class="modal-content bg-light text-dark">
                                                 <div class="modal-header">
-                                                    <h5 class="modal-title" id="projectModalLabel'.$project_tittle.'"></h5>
+                                                    <h5 class="modal-title" id="projectModalLabel' . $project_tittle . '"></h5>
                                                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <p>'.$project_description.'</p>
-                                                    <p><small>Uploaded by: '.$student_name.'</small></p>
+                                                    <p>' . $project_description . '</p>
+                                                    <p><small>Uploaded by: ' . $student_name . '</small></p>
                                                     
                                                     <!-- Embed PDF Viewer -->
                                                     <div class="embed-responsive embed-responsive-4by3">
-                                                        <iframe class="embed-responsive-item" src="'. $project_file .'#toolbar=0" allowfullscreen ></iframe>
+                                                        <iframe class="embed-responsive-item" src="' . $project_file . '#toolbar=0" allowfullscreen ></iframe>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>';
-                                
-                                        
-                
-                }               
-                        }else {
-                            echo "
+                                }
+                            } else {
+                                echo "
                             <p> $search returned an empty search result</p>
                             ";
-                        }
-              
-                        ?>
+                            }
+
+                            ?>
 
 
-                        
-                            
 
-                            </div>
-                            </div>
+
+
+                        </div>
+                    </div>
 
 
                 </div>

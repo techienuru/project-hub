@@ -10,7 +10,7 @@ $photo = null;
 if (isset($_SESSION["supervisor_id"])) {
     $user_id = $_SESSION["supervisor_id"];
     $sql = mysqli_query($connect, "SELECT * FROM `supervisor` WHERE id = $user_id");
-    
+
     if ($sql) {
         $fetch = mysqli_fetch_assoc($sql);
         $firstname = $fetch["firstname"];
@@ -23,52 +23,46 @@ if (isset($_SESSION["supervisor_id"])) {
         }
 
         $modified_lastname = strtoupper($lastname);
-
     } else {
         die("Error: " . mysqli_error($connect));
     }
-if (isset($_POST['submit'])) {
-    $new_firstname = $_POST['firstname'];
-    $new_lastname = $_POST['lastname'];
-    $new_othername = $_POST['othername'];
-    $new_email = $_POST['email'];
-    $new_password = $_POST['password'];
-    $new_cpassword = $_POST['cpassword'];
-    $photo = $_FILES["photo"];
+    if (isset($_POST['submit'])) {
+        $new_firstname = $_POST['firstname'];
+        $new_lastname = $_POST['lastname'];
+        $new_othername = $_POST['othername'];
+        $new_email = $_POST['email'];
+        $new_password = $_POST['password'];
+        $new_cpassword = $_POST['cpassword'];
+        $photo = $_FILES["photo"];
 
-    //GETTING FILE DETAILS
-    $real_photo_name = $photo["name"];
-    $temp_name = $photo["tmp_name"];
+        //GETTING FILE DETAILS
+        $real_photo_name = $photo["name"];
+        $temp_name = $photo["tmp_name"];
 
-    $pathinfo_array = pathinfo($real_photo_name, PATHINFO_EXTENSION);
+        $pathinfo_array = pathinfo($real_photo_name, PATHINFO_EXTENSION);
 
-    $extension = pathinfo($real_photo_name, PATHINFO_EXTENSION);
+        $extension = pathinfo($real_photo_name, PATHINFO_EXTENSION);
 
-    $target_dir = "supervisor-images/" . $real_photo_name;
-
-
+        $target_dir = "supervisor-images/" . $real_photo_name;
 
 
-    if ($new_password != $new_cpassword) {
-        $new_password_err = "Password mismatch";
-    }else {
 
-        $move_photos = move_uploaded_file($temp_name,$target_dir);
-        if ($move_photos) {
-            $sql = mysqli_query($connect,"UPDATE `supervisor` SET firstname = '$new_firstname', lastname = '$new_lastname', othername = '$new_othername', email = '$new_email', password = '$new_password', photos = '$target_dir' WHERE id = $user_id");    
-            if ($sql) {
-                echo "<script>alert('update successful');</script>";
-            }else {
-                die("NOT SUCCESSFUL");
-            }    
+
+        if ($new_password != $new_cpassword) {
+            $new_password_err = "Password mismatch";
+        } else {
+
+            $move_photos = move_uploaded_file($temp_name, $target_dir);
+            if ($move_photos) {
+                $sql = mysqli_query($connect, "UPDATE `supervisor` SET firstname = '$new_firstname', lastname = '$new_lastname', othername = '$new_othername', email = '$new_email', password = '$new_password', photos = '$target_dir' WHERE id = $user_id");
+                if ($sql) {
+                    echo "<script>alert('update successful');</script>";
+                } else {
+                    die("NOT SUCCESSFUL");
+                }
+            }
         }
-
-        
     }
-
-    
-}
-
 } else {
     header("location:../login.php");
 }
@@ -98,7 +92,7 @@ if (isset($_POST['submit'])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <style>
         body {
             background-color: #f8f9fa;
@@ -112,7 +106,6 @@ if (isset($_POST['submit'])) {
             padding: 20px;
             border-radius: 10px;
         }
-    
     </style>
 </head>
 
@@ -141,7 +134,7 @@ if (isset($_POST['submit'])) {
 
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -160,7 +153,7 @@ if (isset($_POST['submit'])) {
                         <span class="menu-title">View Students</span>
                     </a>
                 </li>
-        
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./approval.php">
                         <span class="menu-icon">
@@ -211,7 +204,7 @@ if (isset($_POST['submit'])) {
                             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                                 <div class="navbar-profile">
                                     <img class="img-xs rounded-circle" src="<?php echo $photos; ?>" alt="">
-                                    <p class="mb-0 d-none d-sm-block navbar-profile-name"> <?php echo "$firstname" . " " .$lastname; ?> </p>
+                                    <p class="mb-0 d-none d-sm-block navbar-profile-name"> <?php echo "$firstname" . " " . $lastname; ?> </p>
                                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                                 </div>
                             </a>
@@ -242,52 +235,52 @@ if (isset($_POST['submit'])) {
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-                <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card">
-                    <h2 class="text-center mb-4">Update Your Profile</h2>
-                    <form action="update-profile.php" method="POST" enctype="multipart/form-data">
-                        <div class="mb-3">
-                            <label class="form-label">First Name</label>
-                            <input type="text" name="firstname" value="<?php echo $firstname?>" class="form-control" placeholder="Enter your full name" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">last Name</label>
-                            <input type="text" name="lastname"  value="<?php echo $lastname?>" class="form-control" placeholder="Enter your email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">other Name </label>
-                            <input type="text" name="othername"  value="<?php echo $othername?>" class="form-control" placeholder="Enter your password" required>
-                        </div>
+                    <div class="container">
+                        <div class="row justify-content-center">
+                            <div class="col-md-6">
+                                <div class="card">
+                                    <h2 class="text-center mb-4">Update Your Profile</h2>
+                                    <form action="update-profile.php" method="POST" enctype="multipart/form-data">
+                                        <div class="mb-3">
+                                            <label class="form-label">First Name</label>
+                                            <input type="text" name="firstname" value="<?php echo $firstname ?>" class="form-control" placeholder="Enter your full name" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">last Name</label>
+                                            <input type="text" name="lastname" value="<?php echo $lastname ?>" class="form-control" placeholder="Enter your email" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">other Name </label>
+                                            <input type="text" name="othername" value="<?php echo $othername ?>" class="form-control" placeholder="Enter your password" required>
+                                        </div>
 
 
-                        <div class="mb-3">
-                            <label class="form-label">Email </label>
-                            <input type="email" name="email" class="form-control" placeholder="Enter your email"  value="<?php echo $email?>" required>
-                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Email </label>
+                                            <input type="email" name="email" class="form-control" placeholder="Enter your email" value="<?php echo $email ?>" required>
+                                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" placeholder="Enter your password"  value="<?php echo $password?>" required>
-                            <p class="text-danger"><?php echo $new_password_err; ?></p>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Confirm Password</label>
-                            <input type="password" name="cpassword" class="form-control" placeholder="Confirm your password"  value="<?php echo $password?>" required>
-                            <p class="text-danger"><?php echo $new_password_err; ?></p>
-                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Password</label>
+                                            <input type="password" name="password" class="form-control" placeholder="Enter your password" value="<?php echo $password ?>" required>
+                                            <p class="text-danger"><?php echo $new_password_err; ?></p>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Confirm Password</label>
+                                            <input type="password" name="cpassword" class="form-control" placeholder="Confirm your password" value="<?php echo $password ?>" required>
+                                            <p class="text-danger"><?php echo $new_password_err; ?></p>
+                                        </div>
 
-                        <div class="mb-3">
-                            <label class="form-label">Photo</label>
-                            <input type="file" name="photo" class="form-control" placeholder="Enter your password" required>
+                                        <div class="mb-3">
+                                            <label class="form-label">Photo</label>
+                                            <input type="file" name="photo" class="form-control" placeholder="Enter your password" required>
+                                        </div>
+                                        <button type="submit" name="submit" class="btn btn-primary">Update Profile</button>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <button type="submit" name="submit" class="btn btn-primary">Update Profile</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+                    </div>
 
 
 
@@ -297,9 +290,9 @@ if (isset($_POST['submit'])) {
     </div>
     </div>
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

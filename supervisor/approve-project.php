@@ -28,7 +28,7 @@ if (isset($_GET["id"])) {
                             alert("Project Approved!");
                             window.location.href="final-copy.php";
                         </script>';
-                        die();
+                    die();
                 } else {
                     echo 'Error deleting from pending_project: ' . mysqli_error($connect);
                 }
@@ -42,4 +42,3 @@ if (isset($_GET["id"])) {
         echo 'Error fetching data from pending_project: ' . mysqli_error($connect);
     }
 }
-?>

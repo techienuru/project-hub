@@ -5,7 +5,7 @@ $photos = null;
 if (isset($_SESSION["supervisor_id"])) {
     $user_id = $_SESSION["supervisor_id"];
     $sql = mysqli_query($connect, "SELECT * FROM `supervisor` WHERE id = $user_id");
-    
+
     if ($sql) {
         $fetch = mysqli_fetch_assoc($sql);
         $firstname = $fetch["firstname"];
@@ -14,7 +14,6 @@ if (isset($_SESSION["supervisor_id"])) {
         $email = $fetch["email"];
         if (isset($fetch["photos"])) {
             $photos = $fetch["photos"];
-            
         }
 
         $modified_lastname = strtoupper($lastname);
@@ -48,7 +47,7 @@ if (isset($_SESSION["supervisor_id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -76,7 +75,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -95,7 +94,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         <span class="menu-title">View Students</span>
                     </a>
                 </li>
-        
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./approval.php">
                         <span class="menu-icon">
@@ -177,101 +176,101 @@ if (isset($_SESSION["supervisor_id"])) {
             <!-- partial -->
             <div class="main-panel ">
                 <div class="content-wrapper">
-    <div class="container mt-5">
-        <h1>Students</h1>
-        <div class="table-responsive">
-        <table class="table mt-4">
-            <thead>
-                <tr>
-                    <th scope="col">Student Name</th>
-                    <th scope="col">Project Title</th>
-                    <th scope="col">Status</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?Php
-                $supervisor_fullname = $firstname ." " . $lastname;
-                $sql2 = mysqli_query($connect,"SELECT * FROM `project_suggestion` where `supervisor's_email` = '$email' or `supervisor's_name` = '$supervisor_fullname'");
-                while ($fetch2 = mysqli_fetch_assoc($sql2)) {
-                    $project_id = $fetch2["project_id"];
-                    $student_name = $fetch2["student_name"];
-                    $project_title = $fetch2["project_tittle"];
-                    $project_description = $fetch2["project_description"];
-                    $supervisors_name = $fetch2["supervisor's_name"];
-                    $supervisors_email = $fetch2["supervisor's_email"];
-                    $upload_time = $fetch2["upload_time"];
+                    <div class="container mt-5">
+                        <h1>Students</h1>
+                        <div class="table-responsive">
+                            <table class="table mt-4">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Student Name</th>
+                                        <th scope="col">Project Title</th>
+                                        <th scope="col">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <?Php
+                                    $supervisor_fullname = $firstname . " " . $lastname;
+                                    $sql2 = mysqli_query($connect, "SELECT * FROM `project_suggestion` where `supervisor's_email` = '$email' or `supervisor's_name` = '$supervisor_fullname'");
+                                    while ($fetch2 = mysqli_fetch_assoc($sql2)) {
+                                        $project_id = $fetch2["project_id"];
+                                        $student_name = $fetch2["student_name"];
+                                        $project_title = $fetch2["project_tittle"];
+                                        $project_description = $fetch2["project_description"];
+                                        $supervisors_name = $fetch2["supervisor's_name"];
+                                        $supervisors_email = $fetch2["supervisor's_email"];
+                                        $upload_time = $fetch2["upload_time"];
 
 
-                    echo '<tr>
-                    <td>'.$student_name.'</td>
-                    <td>'.$project_title.'</td>
+                                        echo '<tr>
+                    <td>' . $student_name . '</td>
+                    <td>' . $project_title . '</td>
                     
                     <td>
                     <span class="badge bg-warning text-dark">Pending</span>
                     <a href="approval.php" class="btn btn-success">Take Action</a>
                     </td>
                 </tr>';
-                }
-                /* DISPLAYING APPROVED PROJECT */
-                $sql3 = mysqli_query($connect,"SELECT * FROM `approved_suggestion` where `supervisor's_email` = '$email' or `supervisor's_name` = '$supervisor_fullname'");
-                while ($fetch3 = mysqli_fetch_assoc($sql3)) {
-                    $project_id = $fetch3["project_id"];
-                    $student_name = $fetch3["student_name"];
-                    $project_title = $fetch3["project_tittle"];
-                    $project_description = $fetch3["project_description"];
-                    $supervisors_name = $fetch3["supervisor's_name"];
-                    $supervisors_email = $fetch3["supervisor's_email"];
-                    $upload_time = $fetch3["upload_time"];
+                                    }
+                                    /* DISPLAYING APPROVED PROJECT */
+                                    $sql3 = mysqli_query($connect, "SELECT * FROM `approved_suggestion` where `supervisor's_email` = '$email' or `supervisor's_name` = '$supervisor_fullname'");
+                                    while ($fetch3 = mysqli_fetch_assoc($sql3)) {
+                                        $project_id = $fetch3["project_id"];
+                                        $student_name = $fetch3["student_name"];
+                                        $project_title = $fetch3["project_tittle"];
+                                        $project_description = $fetch3["project_description"];
+                                        $supervisors_name = $fetch3["supervisor's_name"];
+                                        $supervisors_email = $fetch3["supervisor's_email"];
+                                        $upload_time = $fetch3["upload_time"];
 
 
-                    echo '<tr>
-                    <td>'.$student_name.'</td>
-                    <td>'.$project_title.'</td>
+                                        echo '<tr>
+                    <td>' . $student_name . '</td>
+                    <td>' . $project_title . '</td>
 
                     <td>
                     <span class="badge bg-success text-light">Approved!</span>
                     </td>
                 </tr>';
-                }
+                                    }
 
-                /* DISPLAYING DECLINED PROJECT */
-                $sql4 = mysqli_query($connect,"SELECT * FROM `declined_suggestion` where `supervisor's_email` = '$email' or `supervisor's_name` = '$supervisor_fullname'");
-                while ($fetch4 = mysqli_fetch_assoc($sql4)) {
-                    $project_id = $fetch4["project_id"];
-                    $student_name = $fetch4["student_name"];
-                    $project_title = $fetch4["project_tittle"];
-                    $project_description = $fetch4["project_description"];
-                    $supervisors_name = $fetch4["supervisor's_name"];
-                    $supervisors_email = $fetch4["supervisor's_email"];
-                    $upload_time = $fetch4["upload_time"];
+                                    /* DISPLAYING DECLINED PROJECT */
+                                    $sql4 = mysqli_query($connect, "SELECT * FROM `declined_suggestion` where `supervisor's_email` = '$email' or `supervisor's_name` = '$supervisor_fullname'");
+                                    while ($fetch4 = mysqli_fetch_assoc($sql4)) {
+                                        $project_id = $fetch4["project_id"];
+                                        $student_name = $fetch4["student_name"];
+                                        $project_title = $fetch4["project_tittle"];
+                                        $project_description = $fetch4["project_description"];
+                                        $supervisors_name = $fetch4["supervisor's_name"];
+                                        $supervisors_email = $fetch4["supervisor's_email"];
+                                        $upload_time = $fetch4["upload_time"];
 
 
-                    echo '<tr>
-                    <td>'.$student_name.'</td>
-                    <td>'.$project_title.'</td>
+                                        echo '<tr>
+                    <td>' . $student_name . '</td>
+                    <td>' . $project_title . '</td>
 
                     <td>
                     <span class="badge bg-danger text-light">Declined!</span>
                     </td>
                 </tr>';
-                }
+                                    }
 
 
-                ?>
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
-        </div>
-    </div>
+                                    ?>
+                                    <!-- Add more rows as needed -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
     </div>
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

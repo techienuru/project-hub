@@ -49,18 +49,18 @@ if (isset($_SESSION["id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <script>
-  window.onload = function() {
-    // Check authentication status (you might use PHP to set a JavaScript variable)
-    var isLoggedIn = <?php echo json_encode($_SESSION['id'] !== null || $_SESSION['supervisor_id'] !== null); ?>;
-    
-    // If not logged in, redirect to login page
-    if (!isLoggedIn) {
-      window.location.href = 'login.php';
-    }
-  }
-</script>
+        window.onload = function() {
+            // Check authentication status (you might use PHP to set a JavaScript variable)
+            var isLoggedIn = <?php echo json_encode($_SESSION['id'] !== null || $_SESSION['supervisor_id'] !== null); ?>;
+
+            // If not logged in, redirect to login page
+            if (!isLoggedIn) {
+                window.location.href = 'login.php';
+            }
+        }
+    </script>
 
 </head>
 
@@ -144,7 +144,7 @@ if (isset($_SESSION["id"])) {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./feedback.php">
                         <span class="menu-icon">
@@ -267,7 +267,7 @@ if (isset($_SESSION["id"])) {
                                 </div>
                             </div>
                         </div>
-                        
+
                     </div>
 
                 </div>

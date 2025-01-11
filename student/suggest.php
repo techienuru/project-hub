@@ -31,40 +31,37 @@ if (isset($_SESSION["id"])) {
         $project_tittle3 = $_POST["project_tittle3"];
         $project_description3 = $_POST["project_description3"];
         $fullname = "{$firstname} {$lastname}";
-        
-// IF your project was already approved, decline request
-    $sql = mysqli_query($connect,"SELECT * FROM `approved_suggestion` WHERE student_name = '$fullname'");
 
-    if (mysqli_num_rows($sql) > 0) {
-        echo '<script>alert("Your suggestion has already been approved\nTherefore, your suggestion has been declined!");</script>';
-    }else {
-        $sql2 = mysqli_query($connect,"SELECT * FROM `project_suggestion` WHERE student_name = '$fullname'");
+        // IF your project was already approved, decline request
+        $sql = mysqli_query($connect, "SELECT * FROM `approved_suggestion` WHERE student_name = '$fullname'");
 
-        if (mysqli_num_rows($sql2) > 0) {
-            echo "<script>alert('Already made project suggestion, wait for your supervisors Feedback!');</script>";
-        }else {
+        if (mysqli_num_rows($sql) > 0) {
+            echo '<script>alert("Your suggestion has already been approved\nTherefore, your suggestion has been declined!");</script>';
+        } else {
+            $sql2 = mysqli_query($connect, "SELECT * FROM `project_suggestion` WHERE student_name = '$fullname'");
 
-            // INSERTING FIRST SUGGESTION
-            $sql3 = mysqli_query($connect, "INSERT INTO `project_suggestion`(student_name,project_tittle,project_description,`supervisor's_name`,`supervisor's_email`) VALUES('$fullname','$project_tittle1','$project_description1','$supervisor_fullname','$supervisor_email')");
-
-            // INSERTING SECOND SUGGESTION
-            $sql4 = mysqli_query($connect, "INSERT INTO `project_suggestion`(student_name,project_tittle,project_description,`supervisor's_name`,`supervisor's_email`) VALUES('$fullname','$project_tittle2','$project_description2','$supervisor_fullname','$supervisor_email')");
-
-            // INSERTING THIRD SUGGESTION
-            $sql5 = mysqli_query($connect, "INSERT INTO `project_suggestion`(student_name,project_tittle,project_description,`supervisor's_name`,`supervisor's_email`) VALUES('$fullname','$project_tittle3','$project_description3','$supervisor_fullname','$supervisor_email')");
-        
-            if ($sql3 && $sql4 && $sql5) {
-                echo "<script>alert('suggestion succcessfuly sent!');</script>";
+            if (mysqli_num_rows($sql2) > 0) {
+                echo "<script>alert('Already made project suggestion, wait for your supervisors Feedback!');</script>";
             } else {
-                echo "SQL query failed. Check for errors: " . mysqli_error($connect);
-                die();
+
+                // INSERTING FIRST SUGGESTION
+                $sql3 = mysqli_query($connect, "INSERT INTO `project_suggestion`(student_name,project_tittle,project_description,`supervisor's_name`,`supervisor's_email`) VALUES('$fullname','$project_tittle1','$project_description1','$supervisor_fullname','$supervisor_email')");
+
+                // INSERTING SECOND SUGGESTION
+                $sql4 = mysqli_query($connect, "INSERT INTO `project_suggestion`(student_name,project_tittle,project_description,`supervisor's_name`,`supervisor's_email`) VALUES('$fullname','$project_tittle2','$project_description2','$supervisor_fullname','$supervisor_email')");
+
+                // INSERTING THIRD SUGGESTION
+                $sql5 = mysqli_query($connect, "INSERT INTO `project_suggestion`(student_name,project_tittle,project_description,`supervisor's_name`,`supervisor's_email`) VALUES('$fullname','$project_tittle3','$project_description3','$supervisor_fullname','$supervisor_email')");
+
+                if ($sql3 && $sql4 && $sql5) {
+                    echo "<script>alert('suggestion succcessfuly sent!');</script>";
+                } else {
+                    echo "SQL query failed. Check for errors: " . mysqli_error($connect);
+                    die();
+                }
             }
         }
     }
-
-        
-    }
-
 } else {
     header("location:../login.php");
 }
@@ -94,7 +91,7 @@ if (isset($_SESSION["id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -122,7 +119,7 @@ if (isset($_SESSION["id"])) {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -165,7 +162,7 @@ if (isset($_SESSION["id"])) {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./feedback.php">
                         <span class="menu-icon">
@@ -176,96 +173,96 @@ if (isset($_SESSION["id"])) {
                 </li>
             </ul>
         </nav>
-            <!-- partial -->
-            <div class="main-panel ">
-                <div class="content-wrapper">
+        <!-- partial -->
+        <div class="main-panel ">
+            <div class="content-wrapper">
 
-                    <div class="container mt-5">
-                        <h2 class="mb-5">Project topic suggestion</h2>
-                        <form action="suggest.php" method="POST" enctype="multipart/form-data">
-                            <!-- SUPERVISOR'S FULLNAME -->
+                <div class="container mt-5">
+                    <h2 class="mb-5">Project topic suggestion</h2>
+                    <form action="suggest.php" method="POST" enctype="multipart/form-data">
+                        <!-- SUPERVISOR'S FULLNAME -->
                         <select class="form-control bg-white mb-3" name="supervisor_fullname" required>
-                        <option selected>--- Select Supervisor's Full Name---</option>
+                            <option selected>--- Select Supervisor's Full Name---</option>
                             <?php
-                                $select_supervisor = mysqli_query($connect,"SELECT * FROM `supervisor`");
-                                
+                            $select_supervisor = mysqli_query($connect, "SELECT * FROM `supervisor`");
 
-                                while ($row_supervisor = mysqli_fetch_assoc($select_supervisor)) {
-                                    $supervisorFullname = $row_supervisor["firstname"] . " ". $row_supervisor["lastname"] . " " . $row_supervisor["othername"];
 
-                                    echo '
-                                        <option value="'. $supervisorFullname .'">'. $supervisorFullname .'</option>
+                            while ($row_supervisor = mysqli_fetch_assoc($select_supervisor)) {
+                                $supervisorFullname = $row_supervisor["firstname"] . " " . $row_supervisor["lastname"] . " " . $row_supervisor["othername"];
+
+                                echo '
+                                        <option value="' . $supervisorFullname . '">' . $supervisorFullname . '</option>
                                     ';
-                                }
+                            }
 
                             ?>
-                            </select>  
+                        </select>
 
-                                    <!-- SUPERVISOR'S EMAIL -->
+                        <!-- SUPERVISOR'S EMAIL -->
                         <select class="form-control bg-white mb-5" name="supervisor_email" required>
-                        <option selected>--- Select Supervisor's Email Address---</option>
+                            <option selected>--- Select Supervisor's Email Address---</option>
                             <?php
-                                $select_supervisor = mysqli_query($connect,"SELECT * FROM `supervisor`");
-                                
+                            $select_supervisor = mysqli_query($connect, "SELECT * FROM `supervisor`");
 
-                                while ($row_supervisor = mysqli_fetch_assoc($select_supervisor)) {
-                                    $supervisorEmail = $row_supervisor["email"];
 
-                                    echo '
-                                        <option value="'. $supervisorEmail .'">'. $supervisorEmail .'</option>
+                            while ($row_supervisor = mysqli_fetch_assoc($select_supervisor)) {
+                                $supervisorEmail = $row_supervisor["email"];
+
+                                echo '
+                                        <option value="' . $supervisorEmail . '">' . $supervisorEmail . '</option>
                                     ';
-                                }
+                            }
 
                             ?>
-                            </select>  
-
-                            
-                            <div class="form-group">
-                                <label for="projectTitle">Project Title 1</label>
-                                <input type="text" name="project_tittle1" class="form-control text-light" placeholder="Enter project title" required>
-                            </div>
-                            <div class="form-group mb-5">
-                                <label for="projectDescription">Project Description 1</label>
-                                <textarea class="form-control text-light" name="project_description1" id="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
-                            </div>
-                            
-
-                            <div class="form-group">
-                                <label for="projectTitle">Project Title 2</label>
-                                <input type="text" name="project_tittle2" class="form-control text-light" placeholder="Enter project title" required>
-                            </div>
-                            <div class="form-group mb-5">
-                                <label for="projectDescription">Project Description 2</label>
-                                <textarea class="form-control text-light" name="project_description2" id="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
-                            </div>
-                            
-
-                            <div class="form-group">
-                                <label for="projectTitle">Project Title 3</label>
-                                <input type="text" name="project_tittle3" class="form-control text-light" placeholder="Enter project title" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="projectDescription">Project Description 3</label>
-                                <textarea class="form-control text-light" name="project_description3" id="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
-                            </div>
-                            
-                            <button type="submit" name="submit" class="btn btn-primary">Submit</button>
-                        </form>
-                    </div>
-                
+                        </select>
 
 
+                        <div class="form-group">
+                            <label for="projectTitle">Project Title 1</label>
+                            <input type="text" name="project_tittle1" class="form-control text-light" placeholder="Enter project title" required>
+                        </div>
+                        <div class="form-group mb-5">
+                            <label for="projectDescription">Project Description 1</label>
+                            <textarea class="form-control text-light" name="project_description1" id="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
+                        </div>
 
+
+                        <div class="form-group">
+                            <label for="projectTitle">Project Title 2</label>
+                            <input type="text" name="project_tittle2" class="form-control text-light" placeholder="Enter project title" required>
+                        </div>
+                        <div class="form-group mb-5">
+                            <label for="projectDescription">Project Description 2</label>
+                            <textarea class="form-control text-light" name="project_description2" id="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label for="projectTitle">Project Title 3</label>
+                            <input type="text" name="project_tittle3" class="form-control text-light" placeholder="Enter project title" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="projectDescription">Project Description 3</label>
+                            <textarea class="form-control text-light" name="project_description3" id="projectDescription" rows="4" placeholder="Enter project description" required></textarea>
+                        </div>
+
+                        <button type="submit" name="submit" class="btn btn-primary">Submit</button>
+                    </form>
                 </div>
+
+
+
+
             </div>
         </div>
     </div>
     </div>
+    </div>
 
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

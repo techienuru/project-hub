@@ -4,7 +4,7 @@ include "../include/connect.php";
 if (isset($_GET["project_id"])) {
     $project_id = $_GET["project_id"];
     $declined_message = $_POST["decline_reason"];
-    $declined_message = filter_var($declined_message,FILTER_SANITIZE_STRING);
+    $declined_message = filter_var($declined_message, FILTER_SANITIZE_STRING);
 
 
     $sql = mysqli_query($connect, "SELECT * FROM `project_suggestion` WHERE `project_id` = '$project_id'");
@@ -44,4 +44,3 @@ if (isset($_GET["project_id"])) {
         echo 'Error fetching data from pending_project: ' . mysqli_error($connect);
     }
 }
-?>

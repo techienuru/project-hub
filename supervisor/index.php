@@ -6,7 +6,7 @@ $photos = null;
 if (isset($_SESSION["supervisor_id"])) {
     $user_id = $_SESSION["supervisor_id"];
     $sql = mysqli_query($connect, "SELECT * FROM `supervisor` WHERE id = $user_id");
-    
+
     if ($sql) {
         $fetch = mysqli_fetch_assoc($sql);
         $firstname = $fetch["firstname"];
@@ -15,7 +15,6 @@ if (isset($_SESSION["supervisor_id"])) {
         $email = $fetch["email"];
         if (isset($fetch["photos"])) {
             $photos = $fetch["photos"];
-            
         }
 
         $modified_lastname = strtoupper($lastname);
@@ -51,7 +50,7 @@ if (isset($_SESSION["supervisor_id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
 </head>
 
 <body>
@@ -92,7 +91,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -111,7 +110,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         <span class="menu-title">View Students</span>
                     </a>
                 </li>
-        
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./approval.php">
                         <span class="menu-icon">
@@ -162,7 +161,7 @@ if (isset($_SESSION["supervisor_id"])) {
                             <a class="nav-link" id="profileDropdown" href="#" data-toggle="dropdown">
                                 <div class="navbar-profile">
                                     <img class="img-xs rounded-circle" src="<?php echo $photos; ?>" alt="">
-                                    <p class="mb-0 d-none d-sm-block navbar-profile-name"> <?php echo "$firstname" . " " .$lastname; ?> </p>
+                                    <p class="mb-0 d-none d-sm-block navbar-profile-name"> <?php echo "$firstname" . " " . $lastname; ?> </p>
                                     <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                                 </div>
                             </a>
@@ -215,42 +214,42 @@ if (isset($_SESSION["supervisor_id"])) {
                     <div class="row">
                         <!-- LEFT CARD OF DASHBOARD -->
                         <div class="col-xl-3 col-sm-6 grid-margin stretch-card">
-                             <img src="<?php echo $photos; ?>" class="rounded-circle" width="200" height="200px" alt="">
+                            <img src="<?php echo $photos; ?>" class="rounded-circle" width="200" height="200px" alt="">
                         </div>
-                    
-                    <!-- END OF LEFT CARD OF DASHBOARD -->
+
+                        <!-- END OF LEFT CARD OF DASHBOARD -->
 
 
-                    <div class="col-md-9 grid-margin stretch-card">
-                        <div class="card">
-                            <div class="card-body">
-                                  <div class="d-flex flex-row justify-content-between border-bottom mb-5">
-                                    <h4 class="card-title mb-1 ">Personal information</h4>
+                        <div class="col-md-9 grid-margin stretch-card">
+                            <div class="card">
+                                <div class="card-body">
+                                    <div class="d-flex flex-row justify-content-between border-bottom mb-5">
+                                        <h4 class="card-title mb-1 ">Personal information</h4>
+                                    </div>
+                                    <div class="d-flex flex-row justify-content-between border-bottom mb-5">
+                                        <h6 class="card-title mb-1 text-muted">First Name</h6>
+                                        <p class="mb-1"> <?php echo $firstname ?> </p>
+                                    </div>
+
+                                    <div class="d-flex flex-row justify-content-between border-bottom mb-5">
+                                        <h6 class="card-title mb-1 text-muted">Last Name</h6>
+                                        <p class="mb-1"><?php echo $lastname ?></p>
+                                    </div>
+
+                                    <div class="d-flex flex-row justify-content-between border-bottom mb-5">
+                                        <h6 class="card-title mb-1 text-muted">Other Name</h6>
+                                        <p class="mb-1"><?php echo $othername ?></p>
+                                    </div>
+
+                                    <div class="d-flex flex-row justify-content-between border-bottom">
+                                        <h6 class="card-title mb-1 text-muted">Email Address</h6>
+                                        <p class="mb-1"><?php echo $email ?></p>
+                                    </div>
+
                                 </div>
-                                <div class="d-flex flex-row justify-content-between border-bottom mb-5">
-                                  <h6 class="card-title mb-1 text-muted">First Name</h6>
-                                  <p class="mb-1"> <?php echo $firstname?> </p>
-                              </div>
-
-                              <div class="d-flex flex-row justify-content-between border-bottom mb-5">
-                                <h6 class="card-title mb-1 text-muted">Last Name</h6>
-                                <p class="mb-1"><?php echo $lastname?></p>
-                            </div>
-
-                            <div class="d-flex flex-row justify-content-between border-bottom mb-5">
-                              <h6 class="card-title mb-1 text-muted">Other Name</h6>
-                              <p class="mb-1"><?php echo $othername?></p>
-                          </div>
-
-                        <div class="d-flex flex-row justify-content-between border-bottom">
-                          <h6 class="card-title mb-1 text-muted">Email Address</h6>
-                          <p class="mb-1"><?php echo $email?></p>
-                      </div>
-                        
                             </div>
                         </div>
                     </div>
-                  </div>
 
                 </div>
             </div>
@@ -259,9 +258,9 @@ if (isset($_SESSION["supervisor_id"])) {
     </div>
 
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

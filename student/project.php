@@ -5,7 +5,7 @@ include "../include/connect.php";
 if (isset($_SESSION["id"])) {
     $user_id = $_SESSION["id"];
     $sql = mysqli_query($connect, "SELECT * FROM `student` WHERE id = $user_id");
-    
+
     if ($sql) {
         $fetch = mysqli_fetch_assoc($sql);
         $firstname = $fetch["firstname"];
@@ -50,7 +50,7 @@ if (isset($_SESSION["id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -78,7 +78,7 @@ if (isset($_SESSION["id"])) {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -122,7 +122,7 @@ if (isset($_SESSION["id"])) {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./feedback.php">
                         <span class="menu-icon">
@@ -184,90 +184,87 @@ if (isset($_SESSION["id"])) {
                     <div class="container mt-5">
                         <h2 class="mb-4">Projects</h2>
                         <ul class="navbar-nav w-100">
-                        <li class="nav-item w-100">
-                        <form action="search.php" method="get" class="nav-link my-4 d-flex search">
-                        <input type="text" name="s" class="form-control text-white" placeholder="Search projects">
-                        <button type="submit" class="btn bg-primary">
-                            <i class="mdi mdi-magnify"></i>
-                        </button>
-                    </form>
-                        </li>
-                    </ul>
+                            <li class="nav-item w-100">
+                                <form action="search.php" method="get" class="nav-link my-4 d-flex search">
+                                    <input type="text" name="s" class="form-control text-white" placeholder="Search projects" required>
+                                    <button type="submit" class="btn bg-primary">
+                                        <i class="mdi mdi-magnify"></i>
+                                    </button>
+                                </form>
+                            </li>
+                        </ul>
                         <div class="row">
 
-                        <?php 
-                        //SELECTING ALL PROJECTS
-                        $sql2 = mysqli_query($connect,"SELECT * FROM `approved_project`");
-                        while ($fetch = mysqli_fetch_assoc($sql2)) {
-                            $project_id = $fetch["project_id"];
-                            $student_name = $fetch["student_name"];
-                            $project_tittle = $fetch["project_tittle"];
-                            $project_description = $fetch["project_description"];
-                            $project_file = $fetch["project_file"];
-                            $upload_time = $fetch["approval_time"];
+                            <?php
+                            //SELECTING ALL PROJECTS
+                            $sql2 = mysqli_query($connect, "SELECT * FROM `approved_project`");
+                            while ($fetch = mysqli_fetch_assoc($sql2)) {
+                                $project_id = $fetch["project_id"];
+                                $student_name = $fetch["student_name"];
+                                $project_tittle = $fetch["project_tittle"];
+                                $project_description = $fetch["project_description"];
+                                $project_file = $fetch["project_file"];
+                                $upload_time = $fetch["approval_time"];
 
-                           
-                            echo '
+
+                                echo '
                             <!-- Sample Project Card 1-->
                             <div class="col-lg-4 col-md-6 mb-4">
                                 <!-- Project Card -->
                                 <div class="card" id="project-card">
                                     <div class="card-body">
-                                        <h5 class="card-title">'.$project_tittle.'</h5>
-                                        <p class="card-text">'.$project_description.'</p>
-                                        <p class="card-text text-muted m-0">Uploaded by: '.$student_name.'</p>
-                                        <p class="card-text text-muted">Upload Time: '.$upload_time.'</p>
-                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal'.$project_id.'">View Project</button>
+                                        <h5 class="card-title">' . $project_tittle . '</h5>
+                                        <p class="card-text">' . $project_description . '</p>
+                                        <p class="card-text text-muted m-0">Uploaded by: ' . $student_name . '</p>
+                                        <p class="card-text text-muted">Upload Time: ' . $upload_time . '</p>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#projectModal' . $project_id . '">View Project</button>
                                     </div>
                                 </div>
                             
                                 <!-- Modal (Bootstrap 5) -->
-                                <div class="modal fade" id="projectModal'.$project_id.'" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
+                                <div class="modal fade" id="projectModal' . $project_id . '" tabindex="-1" aria-labelledby="projectModalLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-scrollable modal-lg"> <!-- Use modal-dialog-scrollable for a scrollable modal on smaller screens -->
                                         <div class="modal-content bg-light text-dark">
                                             <div class="modal-header">
-                                                <h5 class="modal-title" id="projectModalLabel'.$project_tittle.'"></h5>
+                                                <h5 class="modal-title" id="projectModalLabel' . $project_tittle . '"></h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
                                             <div class="modal-body">
-                                                <p>'.$project_description.'</p>
-                                                <p><small>Uploaded by: '.$student_name.'</small></p>
+                                                <p>' . $project_description . '</p>
+                                                <p><small>Uploaded by: ' . $student_name . '</small></p>
                                                 
                                                 <!-- Embed PDF Viewer -->
                                                 <div class="embed-responsive embed-responsive-4by3">
-                                                    <iframe class="embed-responsive-item" src="'. $project_file .'" allowfullscreen ></iframe>
+                                                    <iframe class="embed-responsive-item" src="' . $project_file . '" allowfullscreen ></iframe>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>';
-                            
-                                    
-            
-            } 
-                        ?>
+                            }
+                            ?>
 
-                            </div>
+                        </div>
 
 
-                            </div>
-                            <!-- End of Sample Project Card -->
-                
+                    </div>
+                    <!-- End of Sample Project Card -->
+
                 </div>
             </div>
         </div>
     </div>
 
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>
 
-    
+
 
     <!-- plugins:js -->
     <script src="assets/vendors/js/vendor.bundle.base.js"></script>

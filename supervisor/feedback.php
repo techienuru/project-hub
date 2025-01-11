@@ -5,7 +5,7 @@ $photos = null;
 if (isset($_SESSION["supervisor_id"])) {
     $user_id = $_SESSION["supervisor_id"];
     $sql = mysqli_query($connect, "SELECT * FROM `supervisor` WHERE id = $user_id");
-    
+
     if ($sql) {
         $fetch = mysqli_fetch_assoc($sql);
         $firstname = $fetch["firstname"];
@@ -14,7 +14,6 @@ if (isset($_SESSION["supervisor_id"])) {
         $email = $fetch["email"];
         if (isset($fetch["photos"])) {
             $photos = $fetch["photos"];
-            
         }
 
         $modified_lastname = strtoupper($lastname);
@@ -48,7 +47,7 @@ if (isset($_SESSION["supervisor_id"])) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="/styles.css">
     <style>
@@ -60,11 +59,11 @@ if (isset($_SESSION["supervisor_id"])) {
             border-radius: 10px;
             background-color: #000;
         }
-        
+
         .form-group {
             margin-bottom: 20px;
         }
-        
+
         .form-control {
             width: 100%;
             padding: 10px;
@@ -73,7 +72,7 @@ if (isset($_SESSION["supervisor_id"])) {
             border-radius: 5px;
             border: 1px solid #ccc;
         }
-        
+
         .btn-primary {
             background-color: #007bff;
             color: #fff;
@@ -82,12 +81,11 @@ if (isset($_SESSION["supervisor_id"])) {
             padding: 10px 20px;
             cursor: pointer;
         }
-        
+
         .btn-primary:hover {
             background-color: #0056b3;
         }
-        
-            </style>
+    </style>
 </head>
 
 <body>
@@ -114,7 +112,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -133,7 +131,7 @@ if (isset($_SESSION["supervisor_id"])) {
                         <span class="menu-title">View Students</span>
                     </a>
                 </li>
-        
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./approval.php">
                         <span class="menu-icon">
@@ -215,7 +213,7 @@ if (isset($_SESSION["supervisor_id"])) {
             <!-- partial -->
             <div class="main-panel ">
                 <div class="content-wrapper">
-                
+
                     <div class="feedback-form">
                         <h2>Give Us Your Feedback</h2>
                         <form>
@@ -238,16 +236,16 @@ if (isset($_SESSION["supervisor_id"])) {
                             </div>
                             <div class="form-group">
                                 <label for="rating">Rating:</label>
-                                <input type="number" class="form-control" id="rating" min="1" max="5" style="color: #fff;"  required>
+                                <input type="number" class="form-control" id="rating" min="1" max="5" style="color: #fff;" required>
                             </div>
                             <div class="form-group">
                                 <label for="comments">Comments:</label>
-                                <textarea class="form-control" id="comments" rows="4"  style="color: #fff;"required></textarea>
+                                <textarea class="form-control" id="comments" rows="4" style="color: #fff;" required></textarea>
                             </div>
                             <button type="submit" class="btn btn-primary">Submit Feedback</button>
                         </form>
                     </div>
-                    
+
 
                 </div>
             </div>
@@ -255,9 +253,9 @@ if (isset($_SESSION["supervisor_id"])) {
     </div>
     </div>
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>

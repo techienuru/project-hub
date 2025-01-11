@@ -36,54 +36,54 @@ if (isset($_SESSION["id"])) {
         $target_dir = "projects/" . $real_file_name;
 
 
-        if (!in_array($extension,["pdf","PDF"]) || file_exists($target_dir)) {
-            if (!in_array($extension,["pdf","PDF"])) {
+        if (!in_array($extension, ["pdf", "PDF"]) || file_exists($target_dir)) {
+            if (!in_array($extension, ["pdf", "PDF"])) {
                 $file_error = "Only pdf extension allowed";
             }
             if (file_exists($target_dir)) {
                 $file_error = "File already exist, rename or change file name";
             }
         } else {
-            
+
             // Check for file upload errors
-          // Check for file upload errors
-if ($project_file['error'] !== UPLOAD_ERR_OK) {
+            // Check for file upload errors
+            if ($project_file['error'] !== UPLOAD_ERR_OK) {
 
-    switch ($project_file['error']) {
-        case UPLOAD_ERR_INI_SIZE:
-            $file_error = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
-            break;
-        case UPLOAD_ERR_FORM_SIZE:
-            $file_error = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
-            break;
-        case UPLOAD_ERR_PARTIAL:
-            $file_error = "The uploaded file was only partially uploaded";
-            break;
-        case UPLOAD_ERR_NO_FILE:
-            $file_error = "No file was uploaded";
-            break;
-        case UPLOAD_ERR_NO_TMP_DIR:
-            $file_error = "Missing a temporary folder";
-            break;
-        case UPLOAD_ERR_CANT_WRITE:
-            $file_error = "Failed to write file to disk";
-            break;
-        case UPLOAD_ERR_EXTENSION:
-            $file_error = "A PHP extension stopped the file upload";
-            break;
-        default:
-            $file_error = "Unknown upload error";
-            break;
-    }
+                switch ($project_file['error']) {
+                    case UPLOAD_ERR_INI_SIZE:
+                        $file_error = "The uploaded file exceeds the upload_max_filesize directive in php.ini";
+                        break;
+                    case UPLOAD_ERR_FORM_SIZE:
+                        $file_error = "The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form";
+                        break;
+                    case UPLOAD_ERR_PARTIAL:
+                        $file_error = "The uploaded file was only partially uploaded";
+                        break;
+                    case UPLOAD_ERR_NO_FILE:
+                        $file_error = "No file was uploaded";
+                        break;
+                    case UPLOAD_ERR_NO_TMP_DIR:
+                        $file_error = "Missing a temporary folder";
+                        break;
+                    case UPLOAD_ERR_CANT_WRITE:
+                        $file_error = "Failed to write file to disk";
+                        break;
+                    case UPLOAD_ERR_EXTENSION:
+                        $file_error = "A PHP extension stopped the file upload";
+                        break;
+                    default:
+                        $file_error = "Unknown upload error";
+                        break;
+                }
 
-    echo "<script>alert('$file_error');</script>";
-    die();
-}
+                echo "<script>alert('$file_error');</script>";
+                die();
+            }
 
             // CHECKING IF USER'S PROJECT SUGGESTION IS APPROVED
             $selecting3 = mysqli_query($connect, "SELECT * FROM `approved_suggestion` WHERE student_name = '$fullname'");
-           
-            if (mysqli_num_rows($selecting3) > 0) {   
+
+            if (mysqli_num_rows($selecting3) > 0) {
                 $sql = mysqli_query($connect, "INSERT INTO `pending_project`(student_name, project_tittle, project_description, project_file, `supervisor's_name`, `supervisor's_email`) VALUES('$fullname', '$project_tittle', '$project_description', '$target_dir', '$supervisor_fullname', '$supervisor_email')");
 
 
@@ -97,18 +97,15 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
                         echo "Move file failed: " . $error['message'];
                         die();
                     }
-
                 } else {
                     echo "SQL query failed. Check for errors: " . mysqli_error($connect);
                     die();
                 }
-
             } else {
-                
+
                 if (!mysqli_num_rows($selecting3) > 0) {
                     echo "<script>alert('Your suggestion was not approved');</script>";
                 }
-                
             }
         }
     }
@@ -142,7 +139,7 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
     <!-- Layout styles -->
     <link rel="stylesheet" href="assets/css/style.css">
     <!-- End layout styles -->
-    <link rel="shortcut icon" href="assets/images/favicon.png" />
+    <link rel="shortcut icon" href="../images/NSUK_logo.jpeg" />
     <link rel="stylesheet" href="/styles.css">
 </head>
 
@@ -170,7 +167,7 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
                         </div>
                     </div>
                 </li>
-                <li class="nav-item nav-category"> 
+                <li class="nav-item nav-category">
                     <span class="nav-link">Navigation</span>
                 </li>
                 <li class="nav-item menu-items">
@@ -213,7 +210,7 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./feedback.php">
                         <span class="menu-icon">
@@ -279,41 +276,41 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
 
 
 
-<!-- SUPERVISOR'S FULLNAME -->
-<select class="form-control bg-white mb-3" name="supervisor_fullname" required>
-                        <option selected>--- Supervisor's Full Name---</option>
-                            <?php
-                                $select_supervisor = mysqli_query($connect,"SELECT * FROM `supervisor`");
-                                
+                            <!-- SUPERVISOR'S FULLNAME -->
+                            <select class="form-control bg-white mb-3" name="supervisor_fullname" required>
+                                <option selected>--- Supervisor's Full Name---</option>
+                                <?php
+                                $select_supervisor = mysqli_query($connect, "SELECT * FROM `supervisor`");
+
 
                                 while ($row_supervisor = mysqli_fetch_assoc($select_supervisor)) {
-                                    $supervisorFullname = $row_supervisor["firstname"] . " ". $row_supervisor["lastname"] . " " . $row_supervisor["othername"];
+                                    $supervisorFullname = $row_supervisor["firstname"] . " " . $row_supervisor["lastname"] . " " . $row_supervisor["othername"];
 
                                     echo '
-                                        <option value="'. $supervisorFullname .'">'. $supervisorFullname .'</option>
+                                        <option value="' . $supervisorFullname . '">' . $supervisorFullname . '</option>
                                     ';
                                 }
 
-                            ?>
-                            </select>  
+                                ?>
+                            </select>
 
-                                    <!-- SUPERVISOR'S EMAIL -->
-                        <select class="form-control bg-white mb-5" name="supervisor_email" required>
-                        <option selected>--- Supervisor's Email Address---</option>
-                            <?php
-                                $select_supervisor = mysqli_query($connect,"SELECT * FROM `supervisor`");
-                                
+                            <!-- SUPERVISOR'S EMAIL -->
+                            <select class="form-control bg-white mb-5" name="supervisor_email" required>
+                                <option selected>--- Supervisor's Email Address---</option>
+                                <?php
+                                $select_supervisor = mysqli_query($connect, "SELECT * FROM `supervisor`");
+
 
                                 while ($row_supervisor = mysqli_fetch_assoc($select_supervisor)) {
                                     $supervisorEmail = $row_supervisor["email"];
 
                                     echo '
-                                        <option value="'. $supervisorEmail .'">'. $supervisorEmail .'</option>
+                                        <option value="' . $supervisorEmail . '">' . $supervisorEmail . '</option>
                                     ';
                                 }
 
-                            ?>
-                            </select>  
+                                ?>
+                            </select>
 
                             <div class="form-group">
                                 <label for="projectTitle">Project Title</label>
@@ -326,12 +323,12 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
                             <div class="form-group">
                                 <label for="projectFile">Upload Project File</label>
                                 <input type="file" name="project_file" class="form-control-file" id="projectFile" required>
-                                <p class="text-danger"><?php echo $file_error;?></p>
+                                <p class="text-danger"><?php echo $file_error; ?></p>
                             </div>
                             <button type="submit" name="submit" class="btn btn-primary">Upload</button>
                         </form>
                     </div>
-                
+
 
 
 
@@ -342,9 +339,9 @@ if ($project_file['error'] !== UPLOAD_ERR_OK) {
     </div>
 
     <script>
-        function logout(){
+        function logout() {
             if (confirm("You are about to logout!")) {
-                window.location.href="logout.php";
+                window.location.href = "logout.php";
             }
         }
     </script>
