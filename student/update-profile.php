@@ -1,7 +1,7 @@
 <?php
 
-            session_start();
-            include "../include/connect.php";
+session_start();
+include "../include/connect.php";
 
 //DECLARING NEW VARIABLES
 $new_password_err = null;
@@ -10,62 +10,62 @@ if (isset($_SESSION["id"])) {
     $user_id = $_SESSION["id"];
     $sql = mysqli_query($connect, "SELECT * FROM `student` WHERE id = $user_id");
 
-            if ($sql) {
-                $fetch = mysqli_fetch_assoc($sql);
-                $firstname = $fetch["firstname"];
-                $lastname = $fetch["lastname"];
-                $othername = $fetch["othername"];
-                $matricno = $fetch["matricno"];
-                $level = $fetch["level"];
-                $email = $fetch["email"];
-                $password = $fetch["password"];
-                $photos = $fetch["photos"];
+    if ($sql) {
+        $fetch = mysqli_fetch_assoc($sql);
+        $firstname = $fetch["firstname"];
+        $lastname = $fetch["lastname"];
+        $othername = $fetch["othername"];
+        $matricno = $fetch["matricno"];
+        $level = $fetch["level"];
+        $email = $fetch["email"];
+        $password = $fetch["password"];
+        $photos = $fetch["photos"];
 
         $modified_lastname = strtoupper($lastname);
     } else {
         die("Error: " . mysqli_error($connect));
     }
-            if (isset($_POST['submit'])) {
-                $new_firstname = $_POST['firstname'];
-                $new_lastname = $_POST['lastname'];
-                $new_othername = $_POST['othername'];
-                $new_matricno = $_POST['matricno'];
-                $new_level = $_POST['level'];
-                $new_email = $_POST['email'];
-                $new_password = $_POST['password'];
-                $new_cpassword = $_POST['cpassword'];
-                $photo = $_FILES["photo"];
+    if (isset($_POST['submit'])) {
+        $new_firstname = $_POST['firstname'];
+        $new_lastname = $_POST['lastname'];
+        $new_othername = $_POST['othername'];
+        $new_matricno = $_POST['matricno'];
+        $new_level = $_POST['level'];
+        $new_email = $_POST['email'];
+        $new_password = $_POST['password'];
+        $new_cpassword = $_POST['cpassword'];
+        $photo = $_FILES["photo"];
 
-                //GETTING FILE DETAILS
-                $real_photo_name = $photo["name"];
-                $temp_name = $photo["tmp_name"];
+        //GETTING FILE DETAILS
+        $real_photo_name = $photo["name"];
+        $temp_name = $photo["tmp_name"];
 
-                $pathinfo_array = pathinfo($real_photo_name, PATHINFO_EXTENSION);
+        $pathinfo_array = pathinfo($real_photo_name, PATHINFO_EXTENSION);
 
-                $extension = pathinfo($real_photo_name, PATHINFO_EXTENSION);
+        $extension = pathinfo($real_photo_name, PATHINFO_EXTENSION);
 
-                $target_dir = "photos/" . $real_photo_name;
-
-
+        $target_dir = "photos/" . $real_photo_name;
 
 
-                if ($new_password != $new_cpassword) {
-                    $new_password_err = "Password mismatch";
-                } else {
 
-                    $move_photos = move_uploaded_file($temp_name, $target_dir);
-                    if ($move_photos) {
-                        $sql = mysqli_query($connect, "UPDATE `student` SET firstname = '$new_firstname', lastname = '$new_lastname', othername = '$new_othername', matricno = '$new_matricno', level = '$new_level', email = '$new_email', password = '$new_password', photos = '$target_dir' WHERE id = $user_id");
-                        if ($sql) {
-                            echo "<script>alert('update successful');
+
+        if ($new_password != $new_cpassword) {
+            $new_password_err = "Password mismatch";
+        } else {
+
+            $move_photos = move_uploaded_file($temp_name, $target_dir);
+            if ($move_photos) {
+                $sql = mysqli_query($connect, "UPDATE `student` SET firstname = '$new_firstname', lastname = '$new_lastname', othername = '$new_othername', matricno = '$new_matricno', level = '$new_level', email = '$new_email', password = '$new_password', photos = '$target_dir' WHERE id = $user_id");
+                if ($sql) {
+                    echo "<script>alert('update successful');
                             window.location.href='update-profile.php';
                             </script>";
-                        } else {
-                            die("NOT SUCCESSFUL");
-                        }
-                    }
+                } else {
+                    die("NOT SUCCESSFUL");
                 }
             }
+        }
+    }
 } else {
     header("location:../login.php");
 }
@@ -192,7 +192,7 @@ if (isset($_SESSION["id"])) {
                         <span class="menu-title">Upload project</span>
                     </a>
                 </li>
-                
+
                 <li class="nav-item menu-items">
                     <a class="nav-link" href="./feedback.php">
                         <span class="menu-icon">
@@ -275,7 +275,7 @@ if (isset($_SESSION["id"])) {
 
                                         <div class="mb-3">
                                             <label class="form-label">Level </label>
-                                            <select name="level" class="form-select">
+                                            <select name="level" class="form-control text-white">
                                                 <option value="500 Level" <?php if ($level == "500 Level") {
                                                                                 echo "selected";
                                                                             } ?>>500 Level</option>
